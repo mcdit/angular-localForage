@@ -27,6 +27,10 @@
       },
       watchers = {};
 
+    var isArrayBuffer = function(obj) {
+      return (Object.prototype.toString.call(obj) === "[object ArrayBuffer]");
+    };
+
     // Setter for notification config, itemSet & itemRemove should be booleans
     this.setNotify = function(itemSet, itemRemove) {
       notify = {
@@ -113,7 +117,29 @@
         } else {
           var deferred = $q.defer(),
             args = arguments,
+            localCopy;
+
+          //we need to check if a arraybuffer is in the value
+          if(angular.isObject(value)){
+
+
+            if(isArrayBuffer(value)){
+              localCopy = value;
+            } else {
+              for(var i in value){
+                if(isArrayBuffer(value[i])){
+                  localCopy = value;
+                }
+              }
+
+              if(!localCopy){
+                localCopy = angular.copy(value);
+              }
+            }
+
+          } else {
             localCopy = angular.copy(value);
+          }
 
           //avoid $promises attributes from value objects, if present.
           if(angular.isObject(localCopy) && angular.isDefined(localCopy.$promise)) {
