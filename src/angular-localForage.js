@@ -27,10 +27,24 @@
       },
       watchers = {};
 
-    var isBinary = function(obj) {
 
-      return (Object.prototype.toString.call(obj) === "[object ArrayBuffer]") ||
-        (Object.prototype.toString.call(obj) === "[object Blob]");
+
+    var binaryData = {
+     "[object ArrayBuffer]"       : true,
+     "[object Blob]"              : true,
+     "[object Int8Array]"         : true,
+     "[object Uint8Array]"        : true,
+     "[object Uint8ClampedArray]" : true,
+     "[object Int16Array]"        : true,
+     "[object Uint16Array]"       : true,
+     "[object Int32Array]"        : true,
+     "[object Uint32Array]"       : true,
+     "[object Float32Array]"      : true,
+     "[object Float64Array]"      : true
+    };
+
+    var isBinary = function(obj) {
+      return Boolean(binaryData[Object.prototype.toString.call(obj)]);
     };
 
     // Setter for notification config, itemSet & itemRemove should be booleans

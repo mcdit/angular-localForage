@@ -1,6 +1,11 @@
+
+<a name="1.2.1"></a>
+# 1.2.1 (2014-11-24)
+
+Added support for nested binary data (only useable in indexedDB)
+
 <a name="1.2.0"></a>
 # 1.2.0 (2014-11-18)
-
 
 ## Features
 
