@@ -27,8 +27,10 @@
       },
       watchers = {};
 
-    var isArrayBuffer = function(obj) {
-      return (Object.prototype.toString.call(obj) === "[object ArrayBuffer]");
+    var isBinary = function(obj) {
+
+      return (Object.prototype.toString.call(obj) === "[object ArrayBuffer]") ||
+        (Object.prototype.toString.call(obj) === "[object Blob]");
     };
 
     // Setter for notification config, itemSet & itemRemove should be booleans
@@ -123,11 +125,11 @@
           if(angular.isObject(value)){
 
 
-            if(isArrayBuffer(value)){
+            if(isBinary(value)){
               localCopy = value;
             } else {
               for(var i in value){
-                if(isArrayBuffer(value[i])){
+                if(isBinary(value[i])){
                   localCopy = value;
                 }
               }
